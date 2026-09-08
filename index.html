@@ -14,6 +14,20 @@
 		window.__FRVR = window.__FRVR || {};
 		window.__FRVR.startTime = Date.now();
 		window.LEGACY_COORD_SYSTEM = true;
+		window.GamePlatform = {
+			init: function() { return Promise.resolve(); },
+			commercialBreak: function() { return Promise.resolve(); },
+			rewardedBreak: function() { return Promise.resolve(false); },
+			gameLoadingStart: function() {},
+			gameLoadingFinished: function() {},
+			gameLoadingProgress: function() {},
+			gameplayStart: function() {},
+			gameplayStop: function() {},
+			happyTime: function() {},
+			customEvent: function() {},
+			shareableURL: function() { return Promise.resolve(); },
+			setDebug: function() {}
+		};
 
 	</script>
 
@@ -267,8 +281,6 @@
 			animation: w 1.5s 1;
 		}
 	</style>
-
-	<script src="patch/poki-sdk.js"></script>
 
 </head>
 

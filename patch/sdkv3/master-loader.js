@@ -24,8 +24,5 @@ if (!window.config.unityWebglLoaderUrl) {
     //         window.config.unityWebglLoaderUrl = "https://game-cdn.poki.com/loaders/v2/unity/static/UnityLoader.js"
     // }
 }
-var sdkScript = document.createElement("script");
-sdkScript.src = "patch/sdkv3/poki-sdk.js", sdkScript.onload = function() {
-    var i = document.createElement("script");
-    i.src = root + loader, document.body.appendChild(i)
-}, document.body.appendChild(sdkScript);
+var gameScript = document.createElement("script");
+gameScript.src = root + loader, document.body.appendChild(gameScript);
