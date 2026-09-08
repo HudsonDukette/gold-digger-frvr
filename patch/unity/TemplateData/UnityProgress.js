@@ -55,8 +55,8 @@ window.Game = (function() {
     var _this = this;
 
     window.addEventListener("keydown", function(e) {
-      // space and arrow keys
-      if([8, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      // space and movement keys
+      if([8, 65, 87, 68, 83].indexOf(e.keyCode) > -1) {
         e.preventDefault();
       }
     }, false);
