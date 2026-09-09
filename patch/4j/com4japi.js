@@ -748,8 +748,9 @@ com4j.ad = {
         com4j.ad._lastInGameAdTime = now
     },
     show: function(callbackObj, force) {
-      // com4j.ad._onFinishedAd();
-      // return true;
+                com4j.ad._callbackObj = callbackObj;
+                com4j.ad._onFinishedAd();
+                return true;
         if (!com4j.config.ForJoyH5_ShowAd) {
             if (callbackObj) {
                 com4j.ad._callbackObj = callbackObj;
