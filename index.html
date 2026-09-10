@@ -17,7 +17,50 @@
 		window.GamePlatform = {
 			init: function() { return Promise.resolve(); },
 			commercialBreak: function() { return Promise.resolve(); },
-			rewardedBreak: function() { return Promise.resolve(true); },
+			rewardedBreak: function() {
+				var grantReward = function() {
+					var seen = new Set();
+					var walk = function(obj, depth) {
+						if (!obj || depth > 4 || seen.has(obj)) return false;
+						seen.add(obj);
+						if (obj && typeof obj === 'object') {
+							if (typeof obj.getGems === 'function' && typeof obj.setGems === 'function') {
+								var current = Number(obj.getGems());
+								if (!Number.isFinite(current)) current = Number(obj.gems) || 0;
+								obj.setGems(current + 15);
+								return true;
+							}
+							if (typeof obj.increase === 'function' && typeof obj.amount !== 'undefined') {
+								var currentAmount = Number(obj.amount);
+								if (Number.isFinite(currentAmount)) {
+									obj.increase(15);
+									return true;
+								}
+							}
+							if (obj.state && typeof obj.state === 'object' && typeof obj.state.gems !== 'undefined') {
+								obj.state.gems = Number(obj.state.gems || 0) + 15;
+								if (typeof obj.setGems === 'function') {
+									obj.setGems(obj.state.gems);
+								}
+								return true;
+							}
+							if (typeof obj.gems !== 'undefined' && typeof obj.setGems === 'function') {
+								obj.setGems(Number(obj.gems || 0) + 15);
+								return true;
+							}
+							for (var key in obj) {
+								if (Object.prototype.hasOwnProperty.call(obj, key) && walk(obj[key], depth + 1)) {
+									return true;
+								}
+							}
+						}
+						return false;
+					};
+					walk(window, 0);
+				};
+				try { grantReward(); } catch (e) {}
+				return Promise.resolve(true);
+			},
 			gameLoadingStart: function() {},
 			gameLoadingFinished: function() {},
 			gameLoadingProgress: function() {},
