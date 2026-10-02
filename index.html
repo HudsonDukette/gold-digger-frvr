@@ -700,7 +700,15 @@ scope._jsonData['track-gma'] = {"url":"https://cdn.frvr.com/utils/gameanalytics3
 				req.addEventListener('load', function(event){
 					var s = document.createElement("script");
 					//s.text rather than innerHTML for ie9
-					s.text = event.target.responseText;
+					var source = event.target.responseText;
+					var keyHandler = 'if(!po.editorActive())switch(e.keyCode){';
+					var keyboardControls = 'if(!po.editorActive()){if("+"===e.key||187===e.keyCode||107===e.keyCode){Co.scale.set(1.1*Co.scale.x,1.1*Co.scale.y);e.preventDefault()}else if("-"===e.key||189===e.keyCode||109===e.keyCode){Co.scale.set(Co.scale.x/1.1,Co.scale.y/1.1);e.preventDefault()}else if("z"===e.key||"Z"===e.key||90===e.keyCode){Co.scale.set(1,1);e.preventDefault()}else if("u"===e.key||"U"===e.key||85===e.keyCode){Y.immortal=!0;e.preventDefault()}}if(!po.editorActive())switch(e.keyCode){';
+					if (source.indexOf(keyHandler) !== -1) {
+						s.text = source.replace(keyHandler, keyboardControls);
+					} else {
+						console.error("Could not install camera zoom controls");
+						return;
+					}
 					document.documentElement.appendChild(s);
 				})
 
